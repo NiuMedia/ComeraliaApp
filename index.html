@@ -250,8 +250,11 @@
 							for(y in data[x].Platillos){
 								lista = lista +
 									"<div class=\"ui-grid-a\">" +
-									"<div class=\"ui-block-a\">" + data[x].Platillos[y][0]  + "</div>" +
-									"<div class=\"ui-block-b\"><span style=\"position:relative; padding-left:15px;\">"+data[x].Platillos[y][2]+"</span></div>"+
+										"<div class=\"ui-block-a\">" + data[x].Platillos[y][0]  + "</div>" +
+										"<div class=\"ui-block-b\"><span style=\"position:relative; padding-left:15px;\">"+data[x].Platillos[y][2]+"</span></div>"+
+									"</div>"+
+									"<div class=\"ui-grid-solo\">"+
+										"<div style='color:grey;font-style:italic;font-size:.8em;'>"+data[x].Platillos[y][1]+"</div>"+
 									"</div>";
 							}
 							
@@ -416,8 +419,8 @@
 							"<input type=\"hidden\" id=\"id-restaurante\" value=\""+data[tipo].IdRestaurante+"\">"+
 							"<img style=\"padding: 10px\" src=\"http://comeralia.com.mx/imagenes_usr/"+ data[tipo].Logo +"\" />"+
 								"<h3 style=\"display: block; white-space:normal;\">"+ restaurant +"</h3>"+
-								"<p style=\"display: block; white-space:normal;margin-top:10px;margin-bottom:10px; font-weight:600;\">Promo: "+ titulo+"</p>"+
-								"<p style=\"display: block; white-space:normal;margin-top:10px;margin-bottom:10px;\">Restricciones: "+restricciones+"</p>"+
+								"<p style=\"display: block; white-space:normal;margin-top:10px;margin-bottom:10px; font-weight:600;\">"+ titulo+"</p>"+
+								"<p style=\"display: block; white-space:normal;margin-top:10px;margin-bottom:10px;\">"+restricciones+"</p>"+
 								"<div class=\"ui-grid-solo\">"+
 									"<div class=\"ui-block\">"+
 										"<a href=\"#restaurante\" data-transition=\"slideup\" id=\"ver-mas\" data-role=\"button\" data-theme=\"b\">Más</a>"+
@@ -450,7 +453,7 @@
 <div data-role="page" id="home">
 
 	<div data-role="header" data-position="fixed">
-		<h1><img src="mobile/themes/images/logo_app_interno.png" width="100"/></h1>
+		<h1><a href="#home"><img src="mobile/themes/images/logo_app_interno.png" width="100"/></a></h1>
 	</div><!-- /header -->
 
 	<div data-role="content">
@@ -484,7 +487,7 @@
 <div data-role="page" id="no-connection">
 
 	<div data-role="header" data-position="fixed">
-		<h1><img src="mobile/themes/images/logo_app_interno.png" width="100"/></h1>
+		<h1><a href="#home"><img src="mobile/themes/images/logo_app_interno.png" width="100"/></a></h1>
 	</div><!-- /header -->
 
 	<div data-role="content">
@@ -500,7 +503,7 @@
 <div data-role="page" id="listado">
 	<div data-role="header" data-position="fixed">
 		<a href="#home" data-transition="slidedown" style="margin-top: 10px" data-icon="arrow-l" data-theme="d">Regresar</a>
-		<h1><img src="mobile/themes/images/logo_app_interno.png" width="100"/></h1>
+		<h1><a href="#home"><img src="mobile/themes/images/logo_app_interno.png" width="100"/></a></h1>
 	</div><!-- /header -->
 	<div data-role="content">
 		<ul data-role="listview" id="listado-restaurantes" data-theme="d">
@@ -583,7 +586,7 @@
 <div data-role="page" id="ubicacion">
 	<div data-role="header" data-position="fixed">
 		<a href="#restaurante" data-transition="slidedown" style="margin-top: 10px" data-icon="arrow-l" data-theme="d">Regresar</a>
-		<h1><img src="mobile/themes/images/logo_app_interno.png" width="100"/></h1>
+		<h1><a href="#home"><img src="mobile/themes/images/logo_app_interno.png" width="100"/></a></h1>
 	</div><!-- /header -->
 	<div data-role="content">
 		<ul data-role="listview" style="margin: 0px;" data-theme="d">
@@ -605,7 +608,7 @@
 <div data-role="page" id="menu">
 	<div data-role="header" data-position="fixed">
 		<a href="#restaurante" data-transition="slidedown" style="margin-top: 10px" data-icon="arrow-l" data-theme="d">Regresar</a>
-		<h1><img src="mobile/themes/images/logo_app_interno.png" width="100"/></h1>
+		<h1><a href="#home"><img src="mobile/themes/images/logo_app_interno.png" width="100"/></a></h1>
 	</div><!-- /header -->
 	<div data-role="content">
 		<ul data-role="listview" style="margin: 0px;" data-theme="d">
@@ -628,7 +631,7 @@
 <div data-role="page" id="promociones-del-dia">
 	<div data-role="header" data-position="fixed">
 		<a href="#home" data-transition="slidedown" style="margin-top: 10px" data-icon="arrow-l" data-theme="d">Regresar</a>
-		<h1><img src="mobile/themes/images/logo_app_interno.png" width="100"/></h1>
+		<h1><a href="#home"><img src="mobile/themes/images/logo_app_interno.png" width="100"/></a></h1>
 	</div><!-- /header -->
 	<div data-role="content">
 		<div id="fondo-busqueda">
@@ -644,7 +647,7 @@
 <div data-role="page" id="promociones">
 	<div data-role="header" data-position="fixed">
 		<a href="#restaurante" data-transition="slidedown" style="margin-top: 10px" data-icon="arrow-l" data-theme="d">Regresar</a>
-		<h1><img src="mobile/themes/images/logo_app_interno.png" width="100"/></h1>
+		<h1><a href="#home"><img src="mobile/themes/images/logo_app_interno.png" width="100"/></a></h1>
 	</div><!-- /header -->
 	<div data-role="content">
 		<ul data-role="listview" style="margin: 0px;" data-theme="d">
@@ -668,7 +671,7 @@
 <div data-role="page" id="galeria">
 	<div data-role="header" data-position="fixed">
 		<a href="#restaurante" data-transition="slidedown" style="margin-top: 10px" data-icon="arrow-l" data-theme="d">Regresar</a>
-		<h1><img src="mobile/themes/images/logo_app_interno.png" width="100"/></h1>
+		<h1><a href="#home"><img src="mobile/themes/images/logo_app_interno.png" width="100"/></a></h1>
 	</div><!-- /header -->
 	<div data-role="content">
 		<ul data-role="listview" style="margin: 0px;" data-theme="d">
