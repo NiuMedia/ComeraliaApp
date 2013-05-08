@@ -168,6 +168,7 @@
 					jQuery("#restaurante #logo").attr('src', "http://comeralia.com.mx/imagenes_usr/" + data.info.Logo);
 					jQuery("#restaurante #link-llamar").attr('href', "tel:" + data.info.TelOficina);
 					jQuery("#restaurante #id-restaurante").val(identificador);
+					jQuery("#restaurante #resena").html(data.info.Resenia);
 					
 					chars = "";
 					
@@ -579,6 +580,9 @@
 				<div class="ui-block-a"><span>Sabado: </span></div>
 				<div class="ui-block-b"><span id="horsab"></span></div>
 			</div>
+		<div>
+			<p id="resena"></p>
+		</div>
 	</div>
 </div>
 
