@@ -156,6 +156,50 @@
 				
 				return true;
 			});
+
+			jQuery("#listado-con-busqueda").click(function(){
+				jQuery.mobile.loading( 'show', {
+					text: 'Cargando...',
+					textVisible: true,
+					theme: 'a',
+					html: ""
+				});
+				elemento = $(this)
+				jQuery("#listado-restaurantes-completo").empty();
+				jQuery.post( 'http://comeralia.com.mx/api/api.php', {Cocina:"", Servicio:"", Zona:"", metodo: "restaurantes"}, function( data ){
+					
+					for(tipo in data){
+						elemento_lista  = jQuery("<li>"+
+							"<input type=\"hidden\" id=\"id-restaurante\" value=\""+data[tipo][0]+"\">"+
+							"<img style=\"padding: 10px; width: 80px;\" src=\"http://comeralia.com.mx/imagenes_usr/"+ data[tipo][8] +"\" />"+
+							"<h3 style=\"display: block; white-space:normal;margin-top:10px;margin-bottom:10px;\">"+ data[tipo][1] +"</h3>"+
+							"<p style=\"display: block; white-space:normal;margin-top:10px;margin-bottom:10px;\">"+ data[tipo][2] +" "+ data[tipo][3] +" "+ data[tipo][4] +"</p>"+
+							"<p style=\"display: block\">"+ data[tipo][5] +"</p>"+
+							"<br /><div class=\"ui-grid-a\">"+
+								"<div class=\"ui-block-a\">"+
+									"<a href=\"tel:"+ data[tipo][5] +"\" data-role=\"button\" data-theme=\"c\">Llamar</a>"+
+								"</div>"+
+								"<div class=\"ui-block-b\">"+
+									"<a href=\"#restaurante\" data-transition=\"slideup\" id=\"ver-mas\" data-role=\"button\" data-theme=\"b\">Más</a>"+
+								"</div>"+
+							"</div>"+
+						"</li>");
+						jQuery("#listado-restaurantes-completo").append(elemento_lista).trigger('create');
+						id_restaurante = elemento_lista.find("#id-restaurante").val();
+						elemento_lista.find("#ver-mas").click( function(){ 
+							
+							id_restaurante = $(this).parent().parent().parent().find( "#id-restaurante" ).val();
+							origen_y_asi = "#listado";
+							ver_mas( id_restaurante,origen_y_asi );
+							
+						});
+					}
+					jQuery("#listado-restaurantes-completo").listview('refresh');
+					$.mobile.loading( 'hide' );
+				}, "json" );
+				
+				return true;
+			});
 		
 			function ver_mas( identificador , origen_ant){
 				
@@ -480,6 +524,7 @@
 				 <a href="#listado" id="busqueda-button" data-transition="slideup" style="width: 100%; right: 0px; position: relative" data-theme="b" data-role="button">Buscar</a> 	
 		</div>
 		 <a href="#promociones-del-dia" id="promos-de-hoy" data-theme="c" data-role="button">Promociones de hoy</a> 
+		 <a href="#listado-completo" id="listado-con-busqueda" data-theme="a" data-role="button">Buscar dentro de todos los restaurantes</a> 
 	</div><!-- /content -->
 
 </div><!-- /page -->
@@ -707,6 +752,16 @@
 					<img id="img5" class="img-restaurantes" src=""/>
 				</div>
 			</div>
+	</div>
+</div>
+<div data-role="page" id="listado-completo">
+	<div data-role="header" data-position="fixed">
+		<a href="#home" data-transition="slidedown" style="margin-top: 10px" data-icon="arrow-l" data-theme="d">Regresar</a>
+		<h1><a href="#home"><img src="mobile/themes/images/logo_app_interno.png" width="100"/></a></h1>
+	</div><!-- /header -->
+	<div data-role="content">
+		<ul data-role="listview" id="listado-restaurantes-completo" data-theme="d" data-filter="true" data-filter-placeholder="Busqueda...">
+		</ul>
 	</div>
 </div>
 <script type="text/javascript">
