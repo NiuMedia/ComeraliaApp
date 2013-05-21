@@ -171,17 +171,9 @@
 					for(tipo in data){
 						elemento_lista  = jQuery("<li>"+
 							"<input type=\"hidden\" id=\"id-restaurante\" value=\""+data[tipo][0]+"\">"+
-							"<img style=\"padding: 10px; width: 80px;\" src=\"http://comeralia.com.mx/imagenes_usr/"+ data[tipo][8] +"\" />"+
-							"<h3 style=\"display: block; white-space:normal;margin-top:10px;margin-bottom:10px;\">"+ data[tipo][1] +"</h3>"+
-							"<p style=\"display: block; white-space:normal;margin-top:10px;margin-bottom:10px;\">"+ data[tipo][2] +" "+ data[tipo][3] +" "+ data[tipo][4] +"</p>"+
-							"<p style=\"display: block\">"+ data[tipo][5] +"</p>"+
-							"<br /><div class=\"ui-grid-a\">"+
-								"<div class=\"ui-block-a\">"+
-									"<a href=\"tel:"+ data[tipo][5] +"\" data-role=\"button\" data-theme=\"c\">Llamar</a>"+
-								"</div>"+
-								"<div class=\"ui-block-b\">"+
-									"<a href=\"#restaurante\" data-transition=\"slideup\" id=\"ver-mas\" data-role=\"button\" data-theme=\"b\">Más</a>"+
-								"</div>"+
+							data[tipo][1] +
+							"<div class=\"ui-grid-solo\">"+
+								"<a href=\"#restaurante\" data-transition=\"slideup\" id=\"ver-mas\" data-role=\"button\" data-theme=\"b\">Más</a>"+
 							"</div>"+
 						"</li>");
 						jQuery("#listado-restaurantes-completo").append(elemento_lista).trigger('create');
@@ -684,12 +676,10 @@
 		<h1><a href="#home"><img src="mobile/themes/images/logo_app_interno.png" width="100"/></a></h1>
 	</div><!-- /header -->
 	<div data-role="content">
-		<div id="fondo-busqueda">
 			<h2 id="label-main">Promociones de Hoy</h2>
 			<ul style="margin: 0px; margin-top: 10px" data-theme="d" data-role="listview" id="promospaceall">
 				
 			</ul>
-		</div>
 	</div>
 </div>
 
