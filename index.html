@@ -283,18 +283,63 @@
 							"<h2 id=\"menu-title\">"+data[x].Menu+"</h2>";
 							
 						lista = "";
-							
+						if(data[x] != 0.00 && data[x] != 0.00){
+							lista = lista +
+								"<div class=\"ui-grid-c\">" +
+									"<div class=\"ui-block-a\"></div>" +
+									"<div class=\"ui-block-b\"><span style=\"position:relative; padding-left:15px;\">Chica</span></div>"+
+									"<div class=\"ui-block-c\"><span style=\"position:relative; padding-left:15px;\">Mediana</span></div>"+
+									"<div class=\"ui-block-d\"><span style=\"position:relative; padding-left:15px;\">Grande</span></div>"+
+								"</div>";
+								for(y in data[x].Platillos){
+									lista = lista +
+										"<div class=\"ui-grid-solo\">"+
+											"<div style='border-style:solid; border-width: 1px; border-color: transparent;'></div>"+
+										"</div>"+
+										"<div class=\"ui-grid-solo\">"+
+											"<div style='border-style:solid; border-width: 1px; border-color: #E6E6E6;'></div>"+
+										"</div>"+
+										"<div class=\"ui-grid-solo\">"+
+											"<div style='border-style:solid; border-width: 1px; border-color: transparent;'></div>"+
+										"</div>"+
+										"<div class=\"ui-grid-solo\">"+
+											"<div>"+data[x].Platillos[y][0]+"</div>"+
+										"</div>"+
+										"<div class=\"ui-grid-solo\">"+
+											"<div style='color:grey;font-style:italic;font-size:.8em';>"+data[x].Platillos[y][1]+"</div>"+
+										"</div>"+
+										"<div class=\"ui-grid-c\">" +
+											"<div class=\"ui-block-a\"></div>" +
+											"<div class=\"ui-block-b\"><span style=\"position:relative; padding-left:15px;\">"+data[x].Platillos[y][2]+"</span></div>"+
+											"<div class=\"ui-block-c\"><span style=\"position:relative; padding-left:15px;\">"+data[x].Platillos[y][3]+"</span></div>"+
+											"<div class=\"ui-block-d\"><span style=\"position:relative; padding-left:15px;\">"+data[x].Platillos[y][4]+"</span></div>"+
+										"</div>";
+								}
+						}
+						else{
 							for(y in data[x].Platillos){
-								lista = lista +
-									"<div class=\"ui-grid-a\">" +
-										"<div class=\"ui-block-a\">" + data[x].Platillos[y][0]  + "</div>" +
-										"<div class=\"ui-block-b\"><span style=\"position:relative; padding-left:15px;\">"+data[x].Platillos[y][2]+"</span></div>"+
-									"</div>"+
-									"<div class=\"ui-grid-solo\">"+
-										"<div style='color:grey;font-style:italic;font-size:.8em;'>"+data[x].Platillos[y][1]+"</div>"+
-									"</div>";
+									lista = lista +
+										"<div class=\"ui-grid-solo\">"+
+											"<div style='border-style:solid; border-width: 1px; border-color: transparent;'></div>"+
+										"</div>"+
+										"<div class=\"ui-grid-solo\">"+
+											"<div style='border-style:solid; border-width: 1px; border-color: #E6E6E6;'></div>"+
+										"</div>"+
+										"<div class=\"ui-grid-solo\">"+
+											"<div style='border-style:solid; border-width: 1px; border-color: transparent;'></div>"+
+										"</div>"+
+										"<div class=\"ui-grid-solo\">"+
+											"<div>"+data[x].Platillos[y][0]+"</div>"+
+										"</div>"+
+										"<div class=\"ui-grid-solo\">"+
+											"<div style='color:grey;font-style:italic;font-size:.8em';>"+data[x].Platillos[y][1]+"</div>"+
+										"</div>"+
+										"<div class=\"ui-grid-a\">" +
+											"<div class=\"ui-block-a\"></div>" +
+											"<div class=\"ui-block-b\"><span style=\"position:relative; padding-left:15px;\">"+data[x].Platillos[y][2]+"</span></div>"+
+										"</div>";
 							}
-							
+						}
 						container_close = "</div>";
 						
 						completo = completo + container_open + lista + container_close;
