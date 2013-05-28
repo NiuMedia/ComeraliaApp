@@ -93,7 +93,7 @@
 		}
 	</style>
 	<script type="text/javascript" language="JavaScript">
-		jQuery(document).ready(function(){
+		jQuery(document).on('pageinit',function(){
 			$.mobile.loading( 'show', {
 				text: 'Cargando...',
 				textVisible: true,
@@ -283,7 +283,10 @@
 							"<h2 id=\"menu-title\">"+data[x].Menu+"</h2>";
 							
 						lista = "";
-						if(data[x] != 0.00 && data[x] != 0.00){
+						precio1 = data[x].Platillos[0][2];
+						precio2 = data[x].Platillos[0][3];
+						precio3 = data[x].Platillos[0][4];
+						if(precio2 != '0.00' && precio3 != '0.00'){
 							lista = lista +
 								"<div class=\"ui-grid-c\">" +
 									"<div class=\"ui-block-a\"></div>" +
@@ -316,7 +319,38 @@
 										"</div>";
 								}
 						}
-						else{
+						else if(precio1 !='0.00' && precio2 != '0.00' && precio3 == '0.00') {
+							lista = lista +
+								"<div class=\"ui-grid-b\">" +
+									"<div class=\"ui-block-a\"></div>" +
+									"<div class=\"ui-block-b\"><span style=\"position:relative; padding-left:15px;\">Mediana</span></div>"+
+									"<div class=\"ui-block-c\"><span style=\"position:relative; padding-left:15px;\">Grande</span></div>"+
+								"</div>";
+								for(y in data[x].Platillos){
+									lista = lista +
+										"<div class=\"ui-grid-solo\">"+
+											"<div style='border-style:solid; border-width: 1px; border-color: transparent;'></div>"+
+										"</div>"+
+										"<div class=\"ui-grid-solo\">"+
+											"<div style='border-style:solid; border-width: 1px; border-color: #E6E6E6;'></div>"+
+										"</div>"+
+										"<div class=\"ui-grid-solo\">"+
+											"<div style='border-style:solid; border-width: 1px; border-color: transparent;'></div>"+
+										"</div>"+
+										"<div class=\"ui-grid-solo\">"+
+											"<div>"+data[x].Platillos[y][0]+"</div>"+
+										"</div>"+
+										"<div class=\"ui-grid-solo\">"+
+											"<div style='color:grey;font-style:italic;font-size:.8em';>"+data[x].Platillos[y][1]+"</div>"+
+										"</div>"+
+										"<div class=\"ui-grid-b\">" +
+											"<div class=\"ui-block-a\"></div>" +
+											"<div class=\"ui-block-b\"><span style=\"position:relative; padding-left:15px;\">"+data[x].Platillos[y][2]+"</span></div>"+
+											"<div class=\"ui-block-c\"><span style=\"position:relative; padding-left:15px;\">"+data[x].Platillos[y][3]+"</span></div>"+
+										"</div>";
+								}
+						}
+						else if(precio2 == '0.00' & precio3 == '0.00'){
 							for(y in data[x].Platillos){
 									lista = lista +
 										"<div class=\"ui-grid-solo\">"+
@@ -340,13 +374,12 @@
 										"</div>";
 							}
 						}
+				
+
 						container_close = "</div>";
 						
 						completo = completo + container_open + lista + container_close;
-						
 					}
-					
-					
 					jQuery('#menu-colapsable').append(completo).collapsibleset( "refresh" );
 				}, 'json');
 			});
@@ -439,6 +472,7 @@
 						restricciones = jQuery("<p style=\"white-space:normal\"></p>");
 						promocion = jQuery("<p style=\"white-space:normal\"></p>");
 						promo_container = jQuery("<li></li>");
+						espacio = jQuery("<p></p>");
 						
 						switch(data[x].Dia){
 							case "1":
@@ -496,7 +530,7 @@
 					for(tipo in data){
 						if(data[tipo].Restaurante==""||data[tipo].Restaurante==null){restaurant=" "}else{restaurant=data[tipo].Restaurante}
 						if(data[tipo].Titulo==""||data[tipo].Titulo==null){titulo="Promocion del día"}else{titulo=data[tipo].Titulo}
-						if(data[tipo].Restricciones==""||data[tipo].Restricciones==null){restricciones="Sin Restricciones"}else{restricciones=data[tipo].Restricciones}
+						if(data[tipo].Restricciones==""||data[tipo].Restricciones==null){restricciones="<br />"}else{restricciones=data[tipo].Restricciones}
 						elemento_lista  = jQuery("<li>"+
 							"<input type=\"hidden\" id=\"id-restaurante\" value=\""+data[tipo].IdRestaurante+"\">"+
 							"<img style=\"padding: 10px\" src=\"http://comeralia.com.mx/imagenes_usr/"+ data[tipo].Logo +"\" />"+
@@ -504,7 +538,7 @@
 								"<p style=\"display: block; white-space:normal;margin-top:10px;margin-bottom:10px; font-weight:600;\">"+ titulo+"</p>"+
 								"<p style=\"display: block; white-space:normal;margin-top:10px;margin-bottom:10px;\">"+restricciones+"</p>"+
 								"<div class=\"ui-grid-solo\">"+
-									"<div class=\"ui-block\">"+
+								"<div class=\"ui-block\">"+
 										"<a href=\"#restaurante\" data-transition=\"slideup\" id=\"ver-mas\" data-role=\"button\" data-theme=\"b\">Más</a>"+
 									"</div>"+
 								"</div>"+
@@ -561,7 +595,7 @@
 				 <a href="#listado" id="busqueda-button" data-transition="slideup" style="width: 100%; right: 0px; position: relative" data-theme="b" data-role="button">Buscar</a> 	
 		</div>
 		 <a href="#promociones-del-dia" id="promos-de-hoy" data-theme="c" data-role="button">Promociones de hoy</a> 
-		 <a href="#listado-completo" id="listado-con-busqueda" data-theme="a" data-role="button">Buscar dentro de todos los restaurantes</a> 
+		 <a href="#listado-completo" id="listado-con-busqueda" data-theme="a" data-role="button">Buscar por nombre</a> 
 	</div><!-- /content -->
 
 </div><!-- /page -->
@@ -663,7 +697,7 @@
 				<div class="ui-block-b"><span id="horsab"></span></div>
 			</div>
 		<div>
-			<h2 id="title" style="display: block; white-space:normal;">Reseña</h2>
+			
 			<p id="resena"></p>
 		</div>
 	</div>
