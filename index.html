@@ -93,7 +93,7 @@
 		}
 	</style>
 	<script type="text/javascript" language="JavaScript">
-		jQuery(document).on('pageinit',function(){
+		jQuery(document).ready(function(){
 			$.mobile.loading( 'show', {
 				text: 'Cargando...',
 				textVisible: true,
@@ -277,7 +277,7 @@
 				jQuery.post("http://comeralia.com.mx/api/api.php", {metodo:'menu', id:id_restaurante}, function( data ){
 					
 					completo = "";
-					
+
 					for(x in data){
 						container_open = "<div data-role=\"collapsible\">" +
 							"<h2 id=\"menu-title\">"+data[x].Menu+"</h2>";
@@ -286,7 +286,7 @@
 						precio1 = data[x].Platillos[0][2];
 						precio2 = data[x].Platillos[0][3];
 						precio3 = data[x].Platillos[0][4];
-						if(precio2 != '0.00' && precio3 != '0.00'){
+						if( precio3 != 0.00){
 							lista = lista +
 								"<div class=\"ui-grid-c\">" +
 									"<div class=\"ui-block-a\"></div>" +
@@ -318,8 +318,11 @@
 											"<div class=\"ui-block-d\"><span style=\"position:relative; padding-left:15px;\">"+data[x].Platillos[y][4]+"</span></div>"+
 										"</div>";
 								}
+								container_close = "</div>";
+								completo = completo + container_open + lista + container_close;
 						}
-						else if(precio1 !='0.00' && precio2 != '0.00' && precio3 == '0.00') {
+						else if( precio2 != 0.00 && precio3 == 0.00 ) {
+							lista = "";
 							lista = lista +
 								"<div class=\"ui-grid-b\">" +
 									"<div class=\"ui-block-a\"></div>" +
@@ -349,8 +352,11 @@
 											"<div class=\"ui-block-c\"><span style=\"position:relative; padding-left:15px;\">"+data[x].Platillos[y][3]+"</span></div>"+
 										"</div>";
 								}
+								container_close = "</div>";
+								completo = completo + container_open + lista + container_close;
 						}
-						else if(precio2 == '0.00' & precio3 == '0.00'){
+						else {
+							lista = "";
 							for(y in data[x].Platillos){
 									lista = lista +
 										"<div class=\"ui-grid-solo\">"+
@@ -373,13 +379,34 @@
 											"<div class=\"ui-block-b\"><span style=\"position:relative; padding-left:15px;\">"+data[x].Platillos[y][2]+"</span></div>"+
 										"</div>";
 							}
+							container_close = "</div>";
+							completo = completo + container_open + lista + container_close;
 						}
-				
-
+					
+					/*for(x in data){
+						container_open = "<div data-role=\"collapsible\">" +
+							"<h2 id=\"menu-title\">"+data[x].Menu+"</h2>";
+							
+						lista = "";
+							
+							for(y in data[x].Platillos){
+								lista = lista +
+									"<div class=\"ui-grid-a\">" +
+										"<div class=\"ui-block-a\">" + data[x].Platillos[y][0]  + "</div>" +
+										"<div class=\"ui-block-b\"><span style=\"position:relative; padding-left:15px;\">"+data[x].Platillos[y][2]+"</span></div>"+
+									"</div>"+
+									"<div class=\"ui-grid-solo\">"+
+										"<div style='color:grey;font-style:italic;font-size:.8em;'>"+data[x].Platillos[y][1]+"</div>"+
+									"</div>";
+							}
+							
 						container_close = "</div>";
 						
 						completo = completo + container_open + lista + container_close;
+						
+					}*/
 					}
+					
 					jQuery('#menu-colapsable').append(completo).collapsibleset( "refresh" );
 				}, 'json');
 			});
@@ -472,7 +499,6 @@
 						restricciones = jQuery("<p style=\"white-space:normal\"></p>");
 						promocion = jQuery("<p style=\"white-space:normal\"></p>");
 						promo_container = jQuery("<li></li>");
-						espacio = jQuery("<p></p>");
 						
 						switch(data[x].Dia){
 							case "1":
@@ -538,7 +564,7 @@
 								"<p style=\"display: block; white-space:normal;margin-top:10px;margin-bottom:10px; font-weight:600;\">"+ titulo+"</p>"+
 								"<p style=\"display: block; white-space:normal;margin-top:10px;margin-bottom:10px;\">"+restricciones+"</p>"+
 								"<div class=\"ui-grid-solo\">"+
-								"<div class=\"ui-block\">"+
+									"<div class=\"ui-block\">"+
 										"<a href=\"#restaurante\" data-transition=\"slideup\" id=\"ver-mas\" data-role=\"button\" data-theme=\"b\">Más</a>"+
 									"</div>"+
 								"</div>"+
@@ -697,7 +723,7 @@
 				<div class="ui-block-b"><span id="horsab"></span></div>
 			</div>
 		<div>
-			
+		
 			<p id="resena"></p>
 		</div>
 	</div>
