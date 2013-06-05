@@ -117,12 +117,16 @@
 				jQuery.mobile.loading( 'show', {
 					text: 'Cargando...',
 					textVisible: true,
-					theme: 'a',
+					theme: 'e',
 					html: ""
 				});
 				elemento = $(this)
 				jQuery("#listado-restaurantes").empty();
 				jQuery.post( 'http://comeralia.com.mx/api/api.php', jQuery("#busqueda-form").serialize(), function( data ){
+					if (data == null || data == ""){
+						mensaje = jQuery('<h1>Lo sentimos, su busqueda <br /> no arrojo resultados</h1>');
+						jQuery('#listado-restaurantes').append(mensaje).trigger('create');
+					}
 					
 					for(tipo in data){
 						elemento_lista  = jQuery("<li>"+
@@ -145,6 +149,7 @@
 						elemento_lista.find("#ver-mas").click( function(){ 
 							
 							id_restaurante = $(this).parent().parent().parent().find( "#id-restaurante" ).val();
+							alert(id_restaurante);
 							origen_y_asi = "#listado";
 							ver_mas( id_restaurante,origen_y_asi );
 							
@@ -156,7 +161,8 @@
 				
 				return true;
 			});
-
+//BUSQUEDA POR RESTAURANTE
+//------------------------------------------------------------------
 			jQuery("#listado-con-busqueda").click(function(){
 				jQuery.mobile.loading( 'show', {
 					text: 'Cargando...',
@@ -180,9 +186,10 @@
 						id_restaurante = elemento_lista.find("#id-restaurante").val();
 						elemento_lista.find("#ver-mas").click( function(){ 
 							
-							id_restaurante = $(this).parent().parent().parent().find( "#id-restaurante" ).val();
-							origen_y_asi = "#listado";
-							ver_mas( id_restaurante,origen_y_asi );
+							id_restaurante = $(this).parent().parent().find( "#id-restaurante" ).val();
+							alert(id_restaurante);
+							origen_y_asi = "#listado-completo";
+							ver_mas( id_restaurante, origen_y_asi );
 							
 						});
 					}
@@ -192,7 +199,8 @@
 				
 				return true;
 			});
-		
+// VER MAS
+//------------------------------------------------------------------------------------		
 			function ver_mas( identificador , origen_ant){
 				
 				jQuery.post("http://comeralia.com.mx/api/api.php", {metodo:'restaurante', id:identificador}, function( data ){
@@ -491,13 +499,18 @@
 				}, "json");
 				
 				jQuery.post("http://comeralia.com.mx/api/api.php", {metodo:'promociones', id:id_restaurante}, function( data ){
-					
+					if (data == null || data == ""){
+						promo_container = jQuery("<h1></h1>");
+						promo_container.append('Por el momento este <br /> restaurante no cuenta <br /> con promociones');
+						jQuery("#promospace").append(promo_container).listview('refresh');
+					}
+
 					for(x in data){
 						
-						titulo = jQuery("<h3></h3>");
-						dia = jQuery("<p style=\"white-space:normal\"></p>");
-						restricciones = jQuery("<p style=\"white-space:normal\"></p>");
-						promocion = jQuery("<p style=\"white-space:normal\"></p>");
+						titulo = jQuery("<h3 style=\"margin-left:1em\"></h3>");
+						dia = jQuery("<p style=\"white-space:normal; margin-left:1em\"></p>");
+						restricciones = jQuery("<p style=\"white-space:normal; margin-left:1em\"></p>");
+						promocion = jQuery("<p style=\"white-space:normal; margin-left:1em\"></p>");
 						promo_container = jQuery("<li></li>");
 						
 						switch(data[x].Dia){
@@ -600,7 +613,7 @@
 
 	<div data-role="content">
 			<div id="fondo-busqueda">
-				<h2 id="label-main">¿Que quieres comer?</h2>
+				<!--<h3 id="label-main">¿Que quieres comer?</h3>-->
 				<form id="busqueda-form" action="#">
 					<label for="select-tipos-de-comida">Tipos de comida:</label>
 					<select data-theme="d" id="select-tipos-de-comida" name="Cocina">
@@ -658,7 +671,7 @@
 	<div data-role="header" data-position="fixed">
 
 		<a id="btn-volver" href="" data-transition="slidedown" style="margin-top: 10px" data-icon="arrow-l" data-theme="d">Regresar</a>
-		<h1><img src="mobile/themes/images/logo_app_interno.png" width="100"/></h1>
+		<h1><a href="#home"><img src="mobile/themes/images/logo_app_interno.png" width="100"/></a></h1>
 	</div><!-- /header -->
 	<div data-role="content">
 		<input id="id-restaurante" type="hidden" value="" />
@@ -849,6 +862,8 @@
 			</div>
 	</div>
 </div>
+
+<!-- BUSQUEDA POR NOMBRE -->
 <div data-role="page" id="listado-completo">
 	<div data-role="header" data-position="fixed">
 		<a href="#home" data-transition="slidedown" style="margin-top: 10px" data-icon="arrow-l" data-theme="d">Regresar</a>
