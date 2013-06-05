@@ -149,7 +149,6 @@
 						elemento_lista.find("#ver-mas").click( function(){ 
 							
 							id_restaurante = $(this).parent().parent().parent().find( "#id-restaurante" ).val();
-							alert(id_restaurante);
 							origen_y_asi = "#listado";
 							ver_mas( id_restaurante,origen_y_asi );
 							
@@ -187,7 +186,6 @@
 						elemento_lista.find("#ver-mas").click( function(){ 
 							
 							id_restaurante = $(this).parent().parent().find( "#id-restaurante" ).val();
-							alert(id_restaurante);
 							origen_y_asi = "#listado-completo";
 							ver_mas( id_restaurante, origen_y_asi );
 							
@@ -431,29 +429,50 @@
 					jQuery("#ubicacion #telefono").html(data.info.TelOficina);
 					jQuery("#ubicacion #logo").attr('src', "http://comeralia.com.mx/imagenes_usr/" + data.info.Logo);
 					jQuery("#ubicacion #link-llamar").attr('href', "tel:" + data.info.TelOficina);
-					
-					geocoder = new google.maps.Geocoder();
-					
-					geocoder.geocode( { 'address': data.info.Calle + " " + data.info.Numero + ", " + data.info.Colonia + ", San Luis Potosi, San Luis Potosi, Mexico" }, function(results, status) {
-						if (status == google.maps.GeocoderStatus.OK) {
-							map.setCenter(results[0].geometry.location);
-							var marker = new google.maps.Marker({
-								map: map, 
-								position: results[0].geometry.location
-							});
-						} else {
-							alert("La Geolocalizacion no pudo realizarse por la siguiente razon: " + status);
-						}
-					});
-					
-					var myLatlng = new google.maps.LatLng(22.142733,-101.010203);
-					var myOptions = {
-						zoom: 16,
-						center: myLatlng,
-						mapTypeId: google.maps.MapTypeId.ROADMAP
+
+					//latitud y longitud dada por el restaurante
+					lat = data.info.Latitud;
+					lon = data.info.Longuitud;
+
+					if(lat != 0 || lon != 0){
+						var currentposition = new google.maps.LatLng(lat,lon);
+						var mapoptions = {
+							zoom: 16,
+							center: currentposition,
+							mapTypeId: google.maps.MapTypeId.ROADMAP
+						};
+
+						var map = new google.maps.Map(document.getElementById("map"), mapoptions);
+
+						var marker = new google.maps.Marker({
+							position: currentposition,
+							map: map
+						});
 					}
-					var map = new google.maps.Map(document.getElementById("map"), myOptions);
+					//--------------------
+					
+					else{
+						geocoder = new google.maps.Geocoder();
+						geocoder.geocode( { 'address': data.info.Calle + " " + data.info.Numero + ", " + data.info.Colonia + ", San Luis Potosi, San Luis Potosi, Mexico" }, function(results, status) {
+							if (status == google.maps.GeocoderStatus.OK) {
+								map.setCenter(results[0].geometry.location);
+								var marker = new google.maps.Marker({
+									map: map, 
+									position: results[0].geometry.location
+								});
+							} else {
+								alert("La Geolocalizacion no pudo realizarse por la siguiente razon: " + status);
+							}
+						});
 						
+						var myLatlng = new google.maps.LatLng(22.142733,-101.010203);
+						var myOptions = {
+							zoom: 16,
+							center: myLatlng,
+							mapTypeId: google.maps.MapTypeId.ROADMAP
+						}
+						var map = new google.maps.Map(document.getElementById("map"), myOptions);
+					}
 					google.maps.event.addDomListener(window, 'load', initialize);
 
 				}, "json");
